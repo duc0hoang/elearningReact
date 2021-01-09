@@ -1,0 +1,1 @@
+export const OPEN_NAVBAR = 'OPEN_NAVBAR';
