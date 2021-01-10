@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStyles } from '../../pages/HomeAdmin/style';
+import { useStyles } from '../../HOCs/Admin/style';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -16,6 +16,7 @@ import createAction from '../../redux/actions';
 import Constants from '../../redux/constants';
 import { useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import logo from '../../assets/images/logo.png';
 
 export default function Navbar() {
   const classes = useStyles();
@@ -26,6 +27,16 @@ export default function Navbar() {
   };
 
   const open = useSelector((state) => state.admin.openNavbar);
+
+  const handlePage = (text) => () => {
+    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT, text));
+    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT_EXTENSION, ''));
+  }
+
+  const onGoHome = () => {
+    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT, 'home'));
+    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT_EXTENSION, ''));
+  }
 
   return (
     <Drawer
@@ -38,8 +49,8 @@ export default function Navbar() {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Typography>123</Typography>
-        <IconButton onClick={handleNavbarClose}>
+        <img src={logo} alt='logo' onClick={onGoHome}/>
+        <IconButton onClick={handleNavbarClose} className={classes.icon}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </div>
@@ -47,8 +58,8 @@ export default function Navbar() {
       <List>
         {['Category', 'Course', 'Video', 'Target', 'User', 'Role'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index <= 3 ? <LayersIcon /> : <PersonIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon>{index <= 3 ? <LayersIcon className={classes.icon} /> : <PersonIcon className={classes.icon} />}</ListItemIcon>
+            <ListItemText primary={text} onClick={handlePage(text)} />
           </ListItem>
         ))}
       </List>

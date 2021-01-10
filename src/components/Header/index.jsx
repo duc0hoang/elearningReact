@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStyles } from '../../pages/HomeAdmin/style';
+import { useStyles } from '../../HOCs/Admin/style';
 import { useDispatch, useSelector } from 'react-redux';
 import createAction from '../../redux/actions';
 import Constants from '../../redux/constants';

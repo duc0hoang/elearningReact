@@ -33,6 +33,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
+        backgroundColor: '#353c4e !important',
+        color: '#DCDCDC !important',
     },
     drawerHeader: {
         display: 'flex',
@@ -57,5 +59,8 @@ export const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
+    },
+    icon:{
+        color: '#DCDCDC !important',
     },
 }));

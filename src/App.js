@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import HomeAdmin from './pages/HomeAdmin';
 import Home from './pages/Home';
+import HomeAdmin from './pages/HomeAdmin';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Route path="/" component={Home} />
       </Switch>
     </BrowserRouter>
-);
+  );
 }
 
 export default App;
