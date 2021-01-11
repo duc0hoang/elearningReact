@@ -17,25 +17,21 @@ import Constants from '../../redux/constants';
 import { useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import logo from '../../assets/images/logo.png';
+import { useHistory } from 'react-router-dom';
 
 export default function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
+  const open = useSelector((state) => state.admin.openNavbar);
+  const history = useHistory();
   const handleNavbarClose = () => {
     dispatch(createAction(Constants.OPEN_NAVBAR, false));
   };
 
-  const open = useSelector((state) => state.admin.openNavbar);
 
   const handlePage = (text) => () => {
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT, text));
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT_EXTENSION, ''));
-  }
-
-  const onGoHome = () => {
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT, 'home'));
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT_EXTENSION, ''));
+    history.push(`/admin/${text.toLowerCase()}`)
   }
 
   return (
@@ -49,7 +45,7 @@ export default function Navbar() {
       }}
     >
       <div className={classes.drawerHeader}>
-        <img src={logo} alt='logo' onClick={onGoHome}/>
+        <img src={logo} alt='logo' onClick={handlePage('')} />
         <IconButton onClick={handleNavbarClose} className={classes.icon}>
           {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
@@ -57,9 +53,9 @@ export default function Navbar() {
       <Divider />
       <List>
         {['Category', 'Course', 'Video', 'Target', 'User', 'Role'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={handlePage(text)} >
             <ListItemIcon>{index <= 3 ? <LayersIcon className={classes.icon} /> : <PersonIcon className={classes.icon} />}</ListItemIcon>
-            <ListItemText primary={text} onClick={handlePage(text)} />
+            <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>

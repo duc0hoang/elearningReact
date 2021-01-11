@@ -1,9 +1,10 @@
 import React from 'react'
+import Admin from '../../HOCs/Admin'
 
 export default function EditCategory() {
     return (
-        <div>
+        <Admin>
             day la trang edit category
-        </div>
+        </Admin>
     )
 }

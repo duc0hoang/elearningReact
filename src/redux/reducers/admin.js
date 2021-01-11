@@ -3,6 +3,7 @@ const initialState = {
     openNavbar: true,
     adminContent: 'home',
     adminContentExtension: '',
+    table: null,
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -15,6 +16,9 @@ const reducer = (state = initialState, { type, payload }) => {
             return { ...state };
         case Constants.CHANGE_ADMIN_CONTENT_EXTENSION:
             state.adminContentExtension = payload;
+            return { ...state };
+        case Constants.CHANGE_TABLE:
+            state.table = payload;
             return { ...state };
         default:
             return state;
