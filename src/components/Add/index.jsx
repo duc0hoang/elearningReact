@@ -96,11 +96,7 @@ export default function AddForm({ content }) {
     };
 
     const handlePassword = () => {
-        if(showPassword){
-            setShowPassword(false);
-        } else {
-            setShowPassword(true);
-        }
+        setShowPassword(!showPassword);
     }
 
     return (
