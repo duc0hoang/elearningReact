@@ -2,17 +2,14 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { useStyles } from '../../HOCs/Admin/style';
 import createAction from '../../redux/actions';
 import Constants from '../../redux/constants';
 import axios from 'axios';
 import { Table, Button, Typography, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, Toolbar, TablePagination, IconButton, Tooltip } from '@material-ui/core';
-import { lighten, makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import FilterListIcon from '@material-ui/icons/FilterList';
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -86,67 +83,6 @@ EnhancedTableHead.propTypes = {
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     headCells: PropTypes.array.isRequired,
-};
-
-const useToolbarStyles = makeStyles((theme) => ({
-    root: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-    },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-            : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    title: {
-        flex: '1 1 100%',
-    },
-}));
-
-const EnhancedTableToolbar = (props) => {
-    const classes = useToolbarStyles();
-    const { numSelected } = props;
-
-    return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                    <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                        Nutrition
-                    </Typography>
-                )}
-
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                    <Tooltip title="Filter list">
-                        <IconButton aria-label="filter list">
-                            <FilterListIcon />
-                        </IconButton>
-                    </Tooltip>
-                )}
-        </Toolbar>
-    );
-};
-
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
 };
 
 export default function EnhancedTable({ content }) {
@@ -242,7 +178,7 @@ export default function EnhancedTable({ content }) {
                                                         className={classes.button}
                                                         variant="contained"
                                                         color="primary"
-                                                        onClick={handlePage('edit')}
+                                                        onClick={handlePage(`edit/${row.id}`)}
                                                         key={index}
                                                         startIcon={<EditIcon />}
                                                     >
@@ -254,7 +190,7 @@ export default function EnhancedTable({ content }) {
                                                         className={classes.button}
                                                         startIcon={<DeleteIcon />}
                                                         key={-index - 1}
-                                                        onClick={handlePage('delete')}
+                                                        onClick={handlePage(`delete/${row.id}`)}
                                                     >
                                                         Delete
                                                         </Button>

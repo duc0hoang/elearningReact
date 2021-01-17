@@ -87,4 +87,19 @@ export const useStyles = makeStyles((theme) => ({
         top: 20,
         width: 1,
     },
+    addForm: {
+        width: "100% !important",
+        height: "auto",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    formAdd:{
+        width: "100% !important",
+    },
+    middleButton:{
+        display: 'flex',
+        justifyContent :'center'
+    }
 }));
