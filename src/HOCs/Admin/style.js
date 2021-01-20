@@ -65,16 +65,19 @@ export const useStyles = makeStyles((theme) => ({
     },
     table: {
         minWidth: 650,
+        overflowX: 'auto !important',
     },
     button: {
         margin: '8px !important',
     },
     rootTable: {
         width: '100%',
+        overflowX: 'auto !important',
     },
     paper: {
         width: '100%',
         marginBottom: theme.spacing(2),
+        overflowX: 'auto !important',
     },
     visuallyHidden: {
         border: 0,
@@ -95,11 +98,28 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
     },
-    formAdd:{
+    formAdd: {
         width: "100% !important",
     },
-    middleButton:{
+    middleButton: {
         display: 'flex',
-        justifyContent :'center'
-    }
+        justifyContent: 'center'
+    },
+    signupPaper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    signupAvatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    signupForm: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    signupSubmit: {
+        margin: theme.spacing(3, 0, 2),
+    },
 }));

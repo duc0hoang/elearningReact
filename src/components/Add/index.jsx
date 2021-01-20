@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from "formik";
 import { useStyles } from '../../HOCs/Admin/style';
 import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@material-ui/core';
@@ -9,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 export default function AddForm({ content }) {
-    const addForm = {
+    const addForm = useMemo(() => ({
         category: ['title', 'icon'],
         course: [
             'categoryId',
@@ -39,7 +38,7 @@ export default function AddForm({ content }) {
             'title',
             'url',
         ]
-    };
+    }), []);
 
     const [selected, setSelected] = useState(null);
     const classes = useStyles();
@@ -62,26 +61,28 @@ export default function AddForm({ content }) {
                     console.log({ ...error });
                 }
             }
-        })
+        });
+
+
+        addForm[content].map(item => {
+            form = { ...form, [item]: '' }
+        });
+
     }, [content]);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setOpen(false);
-    };
+    }, []);
 
-    const handleOpen = () => {
+    const handleOpen = useCallback(() => {
         setOpen(true);
-    };
-
-    addForm[content].map(item => {
-        form = { ...form, [item]: '' }
-    });
+    }, []);
 
     const { handleChange, values } = useFormik({
         initialValues: { ...form },
     });
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = useCallback(async (event) => {
         event.preventDefault();
         try {
             const res = await axios({
@@ -93,11 +94,11 @@ export default function AddForm({ content }) {
         } catch (error) {
             console.log({ ...error });
         }
-    };
+    }, [content]);
 
-    const handlePassword = () => {
+    const handlePassword = useCallback(() => {
         setShowPassword(!showPassword);
-    }
+    }, []);
 
     return (
         <div className={classes.addForm}>
@@ -115,7 +116,7 @@ export default function AddForm({ content }) {
                                         open={open}
                                         onClose={handleClose}
                                         onOpen={handleOpen}
-                                        name={input.replace("Id", "")}
+                                        name={input}
                                         onChange={handleChange}
                                         label={input.replace("Id", "")}
                                     >

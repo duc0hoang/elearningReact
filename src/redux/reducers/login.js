@@ -1,12 +1,12 @@
 import Constants from '../constants'
 const initialState = {
-    openNavbar: true,
+    token: null,
 }
 
 const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case Constants.OPEN_NAVBAR:
-            state.openNavbar = payload;
+        case Constants.SET_TOKEN:
+            state.token = payload;
             return { ...state };
         default:
             return state;

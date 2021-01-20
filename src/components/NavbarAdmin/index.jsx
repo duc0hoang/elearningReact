@@ -19,7 +19,7 @@ import { Typography } from '@material-ui/core';
 import logo from '../../assets/images/logo.png';
 import { useHistory } from 'react-router-dom';
 
-export default function Navbar() {
+export default function NavbarAdmin() {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();

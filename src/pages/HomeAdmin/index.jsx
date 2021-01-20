@@ -1,5 +1,6 @@
 import { Avatar, Input } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import AdminBreadcrumbs from '../../components/Breadcrumb';
 import Admin from '../../HOCs/Admin';
 
 export default function HomeAdmin() {
@@ -28,6 +29,7 @@ export default function HomeAdmin() {
     }
     return (
         <Admin>
+            <AdminBreadcrumbs path="home"/>
             <div>
                 {selectedFile && <Avatar alt="ava" src={avatar} />}
                 <Input type='file' onChange={onSelectFile} />

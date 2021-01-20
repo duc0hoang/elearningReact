@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useStyles } from '../../HOCs/Admin/style';
-import createAction from '../../redux/actions';
-import Constants from '../../redux/constants';
 import axios from 'axios';
 import { Table, Button, Typography, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, Toolbar, TablePagination, IconButton, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -93,13 +91,13 @@ export default function EnhancedTable({ content }) {
     const [orderBy, setOrderBy] = useState('id');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const table = useSelector(state => state.admin.table);
+    const [table, setTable] = useState(null);
 
     const headCells = useMemo(() => table ? Object.getOwnPropertyNames(table[0]) : [], [table]);
 
-    const handlePage = text => () => {
+    const handlePage = useCallback(text => () => {
         history.push(`/admin/${content}/${text}`);
-    }
+    }, [content]);
 
     useEffect(async () => {
         try {
@@ -107,29 +105,29 @@ export default function EnhancedTable({ content }) {
                 url: `http://localhost:8080/api/admin/${content}`,
                 method: 'GET'
             })
-            dispatch(createAction(Constants.CHANGE_TABLE, res.data));
+            setTable(res.data);
         } catch (error) {
             console.log({ ...error });
         }
     }, [content]);
 
-    const handleRequestSort = (event, property) => {
+    const handleRequestSort = useCallback((property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
-    };
+    }, []);
 
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = useCallback((newPage) => {
         setPage(newPage);
-    };
+    }, []);
 
-    const handleChangeRowsPerPage = (event) => {
+    const handleChangeRowsPerPage = useCallback((event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    };
+    }, []);
 
     return (
-        <>
+        <div className={classes.rootTable}>
             <Typography variant='h3' component='h3' align='center'>
                 {content.toUpperCase()} LIST
             </Typography>
@@ -144,7 +142,7 @@ export default function EnhancedTable({ content }) {
             </Button>
             <div className={classes.rootTable}>
                 <Paper className={classes.paper}>
-                    <TableContainer>
+                    <TableContainer className={classes.rootTable}>
                         <Table
                             className={classes.table} aria-labelledby="tableTitle"
                             size='small'
@@ -212,6 +210,6 @@ export default function EnhancedTable({ content }) {
                     />
                 </Paper>
             </div>
-        </>
+        </div>
     );
 }

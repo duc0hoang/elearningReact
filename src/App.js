@@ -6,6 +6,8 @@ import Content from './pages/Content';
 import Add from './pages/Add';
 import Edit from './pages/Edit';
 import Delete from './pages/Delete';
+import SignUp from './pages/Signup';
+import SignIn from './pages/Signin';
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +17,8 @@ function App() {
         <Route path="/admin/:content/add" component={Add} />
         <Route path="/admin/:content" component={Content} />
         <Route path="/admin" component={HomeAdmin} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={SignIn}/>
         <Route path="/" component={Home} />
       </Switch>
     </BrowserRouter>

@@ -4,35 +4,34 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { useDispatch, useSelector } from 'react-redux';
 import Constants from '../../redux/constants';
 import createAction from '../../redux/actions';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-export default function AdminBreadcrumbs() {
-  const dispatch = useDispatch();
-  const adminContent = useSelector((state) => state.admin.adminContent);
-  const adminContentExtension = useSelector((state) => state.admin.adminContentExtension);
+export default function AdminBreadcrumbs({ path, extension }) {
+  const history = useHistory();
+  const content = ['category', 'course', 'video', 'target', 'user', 'role'];
   const onGoHome = () => {
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT, 'home'));
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT_EXTENSION, ''));
+    history.push('/admin');
   }
   const handlePage = (text) => () => {
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT, text));
-    dispatch(createAction(Constants.CHANGE_ADMIN_CONTENT_EXTENSION, ''));
+    history.push(`/admin/${text}`);
   }
   return (
     <Breadcrumbs aria-label="breadcrumb">
       <Link color="inherit" onClick={onGoHome} style={{ textDecoration: 'none' }}>
         Home
-  </Link>
-      { adminContent !== 'home' ?
-        <Link color="inherit" onClick={handlePage(adminContent)} style={{ textDecoration: 'none' }}>
-          {adminContent}
+      </Link>
+      {
+        content.includes(path) &&
+        <Link color="inherit" onClick={handlePage(path)} style={{ textDecoration: 'none' }}>
+          {path}
         </Link>
-        :
-        <></>
       }
-      { adminContentExtension !== '' ?
-        <Typography color="textPrimary">{adminContentExtension}</Typography> :
-        <></>
+
+      {
+        extension && 
+        <Typography color="inherit">
+          {extension}
+        </Typography>
       }
     </Breadcrumbs>
   );

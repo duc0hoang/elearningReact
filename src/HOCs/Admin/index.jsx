@@ -2,9 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useStyles } from "./style";
-import Header from '../../components/Header';
-import Navbar from '../../components/Navbar';
-import AdminBreadcrumbs from '../../components/Breadcrumb';
+import HeaderAdmin from '../../components/HeaderAdmin';
+import NavbarAdmin from '../../components/NavbarAdmin';
 
 export default function Admin(props) {
     const classes = useStyles();
@@ -13,15 +12,14 @@ export default function Admin(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <Header />
-            <Navbar />
+            <HeaderAdmin />
+            <NavbarAdmin />
             <main
                 className={clsx(classes.content, {
                     [classes.contentShift]: open,
                 })}
             >
                 <div className={classes.drawerHeader} />
-                <AdminBreadcrumbs />
                 {props.children}
             </main>
         </div>
